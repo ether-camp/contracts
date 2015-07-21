@@ -11,7 +11,7 @@ contract owned is abstract {
 }
 
 contract mortal is abstract, owned {
-  function kill() {
+  function kill() onlyowner {
     if (msg.sender == owner) suicide(owner);
   }
 }
@@ -26,7 +26,7 @@ contract NameReg is abstract {
 
 contract nameRegAware is abstract {
   function nameRegAddress() returns (address) {
-    return 0xcd2a3d9f938e13cd947ec05abc7fe734df8dd825;
+    return 0x084f6a99003dae6d3906664fdbf43dd09930d0e3;
   }
 }
 
