@@ -53,7 +53,8 @@ contract NameReg is mortal {
 
   function unregister() {
     bytes32 name = toName[msg.sender];
-    if (name == "") return;
+    if (name == "" || nameOwner[name] != tx.origin) return;
+    
     toName[msg.sender] = "";
     toAddress[name] = address(0);
     nameOwner[name] = address(0);
