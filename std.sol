@@ -1,9 +1,17 @@
+
+// This si marker
+// for contract not
+// to be deployed to 
+// any environment
 contract abstract {}
 
 contract owned is abstract {
   address owner;
   function owned() {
     owner = msg.sender;
+  }
+  function changeOwner(address newOwner) onlyowner {
+    owner = newOwner;
   }
   modifier onlyowner() {
     if (msg.sender==owner) _
@@ -26,7 +34,11 @@ contract NameReg is abstract {
 
 contract nameRegAware is abstract {
   function nameRegAddress() returns (address) {
-    return 0x084f6a99003dae6d3906664fdbf43dd09930d0e3;
+    return 0x985509582b2c38010bfaa3c8d2be60022d3d00da;
+  }
+  
+  function named(bytes32 name) returns (address) {
+    return NameReg(nameRegAddress()).addressOf(name);
   }
 }
 

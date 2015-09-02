@@ -1,22 +1,7 @@
+// Used as a marker to not auto-create the contract by ide.ether.camp
 contract abstract {}
 
-contract owned is abstract {
-  address owner;
-  function owned() {
-    owner = msg.sender;
-  }
-  modifier onlyowner() {
-    if (msg.sender==owner) _
-  }
-}
-
-contract mortal is abstract, owned {
-  function kill() {
-    if (msg.sender == owner) suicide(owner);
-  }
-}
-
-contract NameReg is mortal {
+contract NameReg is abstract {
     
   mapping (address => bytes32) toName;
   mapping (bytes32 => address) toAddress;
@@ -51,7 +36,7 @@ contract NameReg is mortal {
     Register(msg.sender, name);
   }
 
-  function unregister() {
+  function unregister() { 
     bytes32 name = toName[msg.sender];
     if (name == "" || nameOwner[name] != tx.origin) return;
     
@@ -60,6 +45,17 @@ contract NameReg is mortal {
     nameOwner[name] = address(0);
     
     Unregister(msg.sender, name);
+  }
+
+  function unregister(bytes32 name) { 
+    if (nameOwner[name] != msg.sender) return;
+    
+    toName[msg.sender] = "";
+    address addr = toAddress[name];
+    toAddress[name] = address(0);
+    nameOwner[name] = address(0);
+    
+    Unregister(addr, name);
   }
 
   function addressOf(bytes32 name) constant returns (address addr) {
