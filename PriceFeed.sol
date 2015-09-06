@@ -1,4 +1,4 @@
-import "std.sol";
+import "std.sol"; // sampled here https://github.com/ether-camp/contracts/blob/master/std.sol
 
 contract PriceFeedApi {
     
